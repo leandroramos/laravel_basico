@@ -1,4 +1,6 @@
 # Parte 3 - Factories
+- [Parte 1 - Setup do projeto, hasMany relationship e Laravel Tinker](https://github.com/leandroramos/laravel_basico/tree/part1)
+- [Parte 2 - Adicionando colunas às tabelas e hasManyThrough relationship](https://github.com/leandroramos/laravel_basico/tree/part2)
 
 ## Criar as factories
     - php artisan make:factory AuthorFactory --model="App\\Author"
@@ -6,64 +8,71 @@
     - php artisan make:factory CommentFactory --model="App\\Comment"
 
 ## Código das factories
-    - AuthorFactory
-        ```php
-        <?php
+- AuthorFactory
 
-        use Faker\Generator as Faker;
+    ```php
+    <?php
 
-        $factory->define(App\Author::class, function (Faker $faker) {
-            return [
-                'name'  => $faker->name,
-                'email' => $faker->unique()->safeEmail,
-                'bio'   => $faker->paragraph(1),
-            ];
-        });
-        ```
-    - PostFactory
-        ```php
-        <?php
+    use Faker\Generator as Faker;
 
-        use App\Author;
-        use Faker\Generator as Faker;
+    $factory->define(App\Author::class, function (Faker $faker) {
+        return [
+            'name'  => $faker->name,
+            'email' => $faker->unique()->safeEmail,
+            'bio'   => $faker->paragraph(1),
+        ];
+    });
+    ```
+        
+- PostFactory
 
-        $factory->define(App\Post::class, function (Faker $faker) {
-            return [
-                'title'     => $faker->sentence(4),
-                'content'   => $faker->paragraph(4),
-                
-                'author_id' => function () {
-                    return Author::orderByRaw("RAND()")
-                        ->take(1)
-                        ->first()
-                        ->id;
-                }
-            ];
-        });
-        ```
-    - CommentFactory
-        ```php
-        <?php
+    ```php
+    <?php
 
-        use App\Post;
-        use Faker\Generator as Faker;
+    use App\Author;
+    use Faker\Generator as Faker;
 
-        $factory->define(App\Comment::class, function (Faker $faker) {
-            return [
-                'author_email'  => $faker->unique()->safeEmail,
-                'content'       => $faker->paragraph(2),
+    $factory->define(App\Post::class, function (Faker $faker) {
+        return [
+            'title'     => $faker->sentence(4),
+            'content'   => $faker->paragraph(4),
 
-                'post_id' => function () {
-                    return Post::orderByRaw("RAND()")
-                        ->take(1)
-                        ->first()
-                        ->id;
-                }
-            ];
-        });
-        ```
+            'author_id' => function () {
+                return Author::orderByRaw("RAND()")
+                    ->take(1)
+                    ->first()
+                    ->id;
+            }
+        ];
+    });
+    ```
+        
+- CommentFactory
+
+    ```php
+    <?php
+
+    use App\Post;
+    use Faker\Generator as Faker;
+
+    $factory->define(App\Comment::class, function (Faker $faker) {
+        return [
+            'author_email'  => $faker->unique()->safeEmail,
+            'content'       => $faker->paragraph(2),
+
+            'post_id' => function () {
+                return Post::orderByRaw("RAND()")
+                    ->take(1)
+                    ->first()
+                    ->id;
+            }
+        ];
+    });
+    ```
 
 ## Código do DatabaseSeeder
+- database/seeds/DatabaseSeeder.php
+
     ```php
     <?php
 
@@ -90,6 +99,7 @@
         }
     }
     ```
+  
 
 ## Links de referência
 - [Laravel 5.6 - Database Testing](https://laravel.com/docs/5.6/database-testing)
