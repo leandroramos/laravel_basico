@@ -1,4 +1,6 @@
 # Laravel Básico - Parte 2 (hasManyThrough)
+- [Parte 1 - Setup do projeto, hasMany relationship e Laravel Tinker](https://github.com/leandroramos/laravel_basico/tree/part1)
+- [Parte 3 - Usando Factories](https://github.com/leandroramos/laravel_basico/tree/part3)
 
 ## Criar o model Authors
 - php artisan make:model Author -m
@@ -22,12 +24,12 @@
     ```php
     public function up()
     {
-        Schema::table('posts', function (Blueprint $table) {
-            $table->integer('author_id')->unsigned();
+            Schema::table('posts', function (Blueprint $table) {
+                $table->integer('author_id')->unsigned();
 
-            $table->foreign('author_id')->references('id')->on('authors');
-        });
-    }
+                $table->foreign('author_id')->references('id')->on('authors');
+            });
+        }
 
         /**
          * Reverse the migrations.
@@ -37,6 +39,7 @@
         public function down()
         {
             Schema::table('posts', function (Blueprint $table) {
+                $table->dropForeign('posts_author_id_foreign')
                 $table->dropColumn('author_id');
             });
         }
@@ -49,27 +52,28 @@
     - php artisan migrate
 
 ## Adicionar os relacionamentos
-    - app/Post.php
-        ```php
-        <?php
+- app/Post.php
 
-        namespace App;
+    ```php
+    <?php
 
-        use Illuminate\Database\Eloquent\Model;
+    namespace App;
 
-        class Post extends Model
+    use Illuminate\Database\Eloquent\Model;
+
+    class Post extends Model
+    {
+        public function comments()
         {
-            public function comments()
-            {
-                return $this->hasMany('App\Comment');
-            }
-
-            public function author()
-            {
-                return $this->belongsTo('App\Author');
-            }
+            return $this->hasMany('App\Comment');
         }
-        ```
+
+        public function author()
+        {
+            return $this->belongsTo('App\Author');
+        }
+    }
+    ```
 
     - app/Author.php
         ```php
