@@ -1,4 +1,6 @@
 # Laravel Básico - Parte 1
+- [Parte 2 - Adicionando colunas às tabelas e hasManyThrough relationship](https://github.com/leandroramos/laravel_basico/tree/part2)
+- [Parte 3 - Usando Factories](https://github.com/leandroramos/laravel_basico/tree/part3)
 
 ## Criação do banco de dados
 - Criar o banco de dados no SGBD preferido
