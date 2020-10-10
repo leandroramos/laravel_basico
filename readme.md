@@ -1,3 +1,5 @@
+## Este tutorial está sendo atualizado para a versão 8 do Laravel!
+
 ## Laravel 5.6 Básico
 
 Série de screencasts composta por treze vídeos que demonstram várias características do framework Laravel.
